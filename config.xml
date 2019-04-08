@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="co.fuelit.aeroworks002" version="0.0.19" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="co.fuelit.aeroworks002" version="0.0.19" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>AeroWorks</name>
     <description>Fuel-IT App for AeroWorks</description>
     <author email="developers@boysfromthefactory.co.nz" href="http://boysfromthefactory.co.nz/">Boys From The Factory</author>
@@ -95,14 +95,12 @@
     <feature name="StatusBar">
         <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
-    <allow-navigation href="http://192.168.1.103:8100" />
     <engine name="android" spec="~6.3.0" />
     <plugin name="cordova-plugin-device" spec="^1.1.7" />
     <plugin name="cordova-plugin-console" spec="^1.0.7" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
     <plugin name="cordova-plugin-statusbar" spec="^2.2.3" />
-	<plugin name="cordova-plugin-ionic-webview" spec="^2.4.1" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <gap:plugin spec="https://github.com/brodybits/cordova-sqlite-legacy-build-support" />
     <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
