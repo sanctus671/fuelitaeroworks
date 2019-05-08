@@ -627,6 +627,7 @@ let BluetoothService = class BluetoothService {
     request() {
         console.log('[BluetoothService] - request() :: Sending transaction request to the BT device');
         this.events.publish('meter:reading');
+        alert("making bluetooth request");
         __WEBPACK_IMPORTED_MODULE_1_ionic_native__["b" /* BluetoothSerial */].write((new __WEBPACK_IMPORTED_MODULE_4__models_bluetooth_message__["d" /* BluetoothTransactionRequest */]()).toString()).then(() => this.onRequestComplete(), failure => this.onFail(failure));
     }
     requestAll() {
@@ -634,20 +635,25 @@ let BluetoothService = class BluetoothService {
     }
     acknowledge() {
         console.log('[BluetoothService] - acknowledge() :: Sending acknowledge to the BT device');
+        alert("writing message");
+        alert((new __WEBPACK_IMPORTED_MODULE_4__models_bluetooth_message__["a" /* BluetoothAcknowledgement */]()).toString());
         __WEBPACK_IMPORTED_MODULE_1_ionic_native__["b" /* BluetoothSerial */].write((new __WEBPACK_IMPORTED_MODULE_4__models_bluetooth_message__["a" /* BluetoothAcknowledgement */]()).toString()).then(() => this.onAcknowledge(), failure => this.onFail(failure));
     }
     onConnect(device) {
         console.info(`[BluetoothService] - onConnect() :: Connected to BT device ${device.id}.`);
-        let alert = this.alertCtrl.create({
+        let alertBox = this.alertCtrl.create({
             title: 'Success',
             subTitle: 'You are now connected to ' + device.name,
             buttons: ['Dismiss']
         });
-        alert.present();
+        alertBox.present();
+        alert("subscribing to bluetooth channel");
         __WEBPACK_IMPORTED_MODULE_1_ionic_native__["b" /* BluetoothSerial */].subscribe(`${__WEBPACK_IMPORTED_MODULE_4__models_bluetooth_message__["b" /* BluetoothMessage */].FRAME_BOUNDARY}`).subscribe(data => this.onData(data), failure => this.onFail(failure));
         this.request();
     }
     onData(data) {
+        alert("response received");
+        alert(data);
         let response;
         try {
             response = new __WEBPACK_IMPORTED_MODULE_4__models_bluetooth_message__["c" /* BluetoothResponse */](data);
@@ -658,6 +664,7 @@ let BluetoothService = class BluetoothService {
         }
         // If the response is just a boundary, drop the response.
         if (response.isBoundaryOnly()) {
+            alert("response is boundary");
             return;
         }
         // If the response is not empty, store it until we get an empty response
@@ -677,10 +684,12 @@ let BluetoothService = class BluetoothService {
         }
     }
     onRequestComplete() {
+        alert("request complete");
         console.log('[BluetoothService] - onRequestComplete() :: Transaction request sent to BT device');
     }
     onAcknowledge() {
         console.log('[BluetoothService] - onAcknowledge() :: Acknowledge sent to BT device');
+        alert("bluetooth acknowledged");
         this.request();
     }
     onFail(failure) {
@@ -1546,15 +1555,14 @@ let FuelITApp = class FuelITApp {
 };
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* ViewChild */])('nav'), 
-    __metadata('design:type', (typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === 'function' && _a) || Object)
+    __metadata('design:type', __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */])
 ], FuelITApp.prototype, "navigationController", void 0);
 FuelITApp = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* Component */])({
         template: `<ion-nav #nav [root]="rootPage"></ion-nav>`
     }), 
-    __metadata('design:paramtypes', [(typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Platform */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Platform */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* PopoverController */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* PopoverController */]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5__providers_plant_service__["a" /* PlantService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_5__providers_plant_service__["a" /* PlantService */]) === 'function' && _e) || Object, (typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_6__providers_operator_service__["a" /* OperatorService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_6__providers_operator_service__["a" /* OperatorService */]) === 'function' && _f) || Object, (typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_8__providers_transaction_service__["a" /* TransactionService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_8__providers_transaction_service__["a" /* TransactionService */]) === 'function' && _g) || Object, (typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_9__providers_timesheet_service__["a" /* TimesheetService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_9__providers_timesheet_service__["a" /* TimesheetService */]) === 'function' && _h) || Object, (typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_7__providers_configuration_service__["a" /* ConfigurationService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_7__providers_configuration_service__["a" /* ConfigurationService */]) === 'function' && _j) || Object, (typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_10__providers_bluetooth_service__["a" /* BluetoothService */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_10__providers_bluetooth_service__["a" /* BluetoothService */]) === 'function' && _k) || Object, (typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Events */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Events */]) === 'function' && _l) || Object])
+    __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Platform */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* PopoverController */], __WEBPACK_IMPORTED_MODULE_5__providers_plant_service__["a" /* PlantService */], __WEBPACK_IMPORTED_MODULE_6__providers_operator_service__["a" /* OperatorService */], __WEBPACK_IMPORTED_MODULE_8__providers_transaction_service__["a" /* TransactionService */], __WEBPACK_IMPORTED_MODULE_9__providers_timesheet_service__["a" /* TimesheetService */], __WEBPACK_IMPORTED_MODULE_7__providers_configuration_service__["a" /* ConfigurationService */], __WEBPACK_IMPORTED_MODULE_10__providers_bluetooth_service__["a" /* BluetoothService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Events */]])
 ], FuelITApp);
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
