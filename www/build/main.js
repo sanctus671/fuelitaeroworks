@@ -628,6 +628,7 @@ let BluetoothService = class BluetoothService {
         console.log('[BluetoothService] - request() :: Sending transaction request to the BT device');
         this.events.publish('meter:reading');
         alert("making bluetooth request");
+        alert((new __WEBPACK_IMPORTED_MODULE_4__models_bluetooth_message__["d" /* BluetoothTransactionRequest */]()).toString());
         __WEBPACK_IMPORTED_MODULE_1_ionic_native__["b" /* BluetoothSerial */].write((new __WEBPACK_IMPORTED_MODULE_4__models_bluetooth_message__["d" /* BluetoothTransactionRequest */]()).toString()).then(() => this.onRequestComplete(), failure => this.onFail(failure));
     }
     requestAll() {
@@ -635,7 +636,7 @@ let BluetoothService = class BluetoothService {
     }
     acknowledge() {
         console.log('[BluetoothService] - acknowledge() :: Sending acknowledge to the BT device');
-        alert("writing message");
+        alert("writing acknowledge");
         alert((new __WEBPACK_IMPORTED_MODULE_4__models_bluetooth_message__["a" /* BluetoothAcknowledgement */]()).toString());
         __WEBPACK_IMPORTED_MODULE_1_ionic_native__["b" /* BluetoothSerial */].write((new __WEBPACK_IMPORTED_MODULE_4__models_bluetooth_message__["a" /* BluetoothAcknowledgement */]()).toString()).then(() => this.onAcknowledge(), failure => this.onFail(failure));
     }
@@ -648,6 +649,7 @@ let BluetoothService = class BluetoothService {
         });
         alertBox.present();
         alert("subscribing to bluetooth channel");
+        alert(`${__WEBPACK_IMPORTED_MODULE_4__models_bluetooth_message__["b" /* BluetoothMessage */].FRAME_BOUNDARY}`);
         __WEBPACK_IMPORTED_MODULE_1_ionic_native__["b" /* BluetoothSerial */].subscribe(`${__WEBPACK_IMPORTED_MODULE_4__models_bluetooth_message__["b" /* BluetoothMessage */].FRAME_BOUNDARY}`).subscribe(data => this.onData(data), failure => this.onFail(failure));
         this.request();
     }
@@ -659,9 +661,11 @@ let BluetoothService = class BluetoothService {
             response = new __WEBPACK_IMPORTED_MODULE_4__models_bluetooth_message__["c" /* BluetoothResponse */](data);
         }
         catch (error) {
+            alert("failed to create new response object");
             this.onFail(error);
             return;
         }
+        alert(JSON.stringify(response));
         // If the response is just a boundary, drop the response.
         if (response.isBoundaryOnly()) {
             alert("response is boundary");
@@ -669,12 +673,14 @@ let BluetoothService = class BluetoothService {
         }
         // If the response is not empty, store it until we get an empty response
         if (!response.isEmpty()) {
+            alert("response is empty");
             console.log('[BluetoothService] - onData() :: Received data from the BT device', response);
             this.responses.push(response);
             this.acknowledge();
         }
         else {
             console.log('[BluetoothService] - onData() :: Finished receiving data from the BT device.');
+            alert("there is a response");
             if (this.responses && this.responses.length > 0) {
                 console.log('[BluetoothService] - onData() :: Publishing the received data.', this.responses);
                 console.info('[BluetoothService] - onData() :: Publishing the received data.');
@@ -804,7 +810,7 @@ let LoginPage = class LoginPage {
 };
 LoginPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* Component */])({
-        selector: 'page-login',template:/*ion-inline-start:"D:\Taylor\Documents\Websites\fuelit\fuelit-aeroworks\src\pages\login\login.html"*/'\n<ion-content padding class="form login">\n        <div class="logo-image"><img src="assets/img/logo.png"></div>\n        <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">\n            <ion-item>\n                <ion-label floating>PIN</ion-label>\n                <ion-input type="password" formControlName="pin_no" class="text-center"></ion-input>\n            </ion-item>\n            <ion-item>\n                <button type="submit" block ion-button [disabled]="state==\'working\'"><ion-icon name="log-in"></ion-icon> Login</button>\n            </ion-item>\n\n        </form>\n\n</ion-content>\n'/*ion-inline-end:"D:\Taylor\Documents\Websites\fuelit\fuelit-aeroworks\src\pages\login\login.html"*/
+        selector: 'page-login',template:/*ion-inline-start:"D:\Taylor\Documents\Websites\fuelit\fuelit-aeroworks-android\src\pages\login\login.html"*/'\n<ion-content padding class="form login">\n        <div class="logo-image"><img src="assets/img/logo.png"></div>\n        <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">\n            <ion-item>\n                <ion-label floating>PIN</ion-label>\n                <ion-input type="password" formControlName="pin_no" class="text-center"></ion-input>\n            </ion-item>\n            <ion-item>\n                <button type="submit" block ion-button [disabled]="state==\'working\'"><ion-icon name="log-in"></ion-icon> Login</button>\n            </ion-item>\n\n        </form>\n\n</ion-content>\n'/*ion-inline-end:"D:\Taylor\Documents\Websites\fuelit\fuelit-aeroworks-android\src\pages\login\login.html"*/
     }), 
     __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_5__providers_configuration_service__["a" /* ConfigurationService */], __WEBPACK_IMPORTED_MODULE_4__providers_operator_service__["a" /* OperatorService */]])
 ], LoginPage);
@@ -843,7 +849,7 @@ let TabsPage = class TabsPage {
 };
 TabsPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* Component */])({
-        selector: 'page-tabs',template:/*ion-inline-start:"D:\Taylor\Documents\Websites\fuelit\fuelit-aeroworks\src\pages\tabs\tabs.html"*/'<ion-tabs class="tabs-basic">\n    <ion-tab tabTitle="Transaction" [root]="transaction"></ion-tab>\n    <ion-tab tabTitle="Aircraft hours" [root]="timesheet"></ion-tab>\n</ion-tabs>'/*ion-inline-end:"D:\Taylor\Documents\Websites\fuelit\fuelit-aeroworks\src\pages\tabs\tabs.html"*/
+        selector: 'page-tabs',template:/*ion-inline-start:"D:\Taylor\Documents\Websites\fuelit\fuelit-aeroworks-android\src\pages\tabs\tabs.html"*/'<ion-tabs class="tabs-basic">\n    <ion-tab tabTitle="Transaction" [root]="transaction"></ion-tab>\n    <ion-tab tabTitle="Aircraft hours" [root]="timesheet"></ion-tab>\n</ion-tabs>'/*ion-inline-end:"D:\Taylor\Documents\Websites\fuelit\fuelit-aeroworks-android\src\pages\tabs\tabs.html"*/
     }), 
     __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* PopoverController */]])
 ], TabsPage);
@@ -1101,7 +1107,7 @@ let CreateTransactionPage = class CreateTransactionPage {
 };
 CreateTransactionPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* Component */])({
-        selector: 'page-settings',template:/*ion-inline-start:"D:\Taylor\Documents\Websites\fuelit\fuelit-aeroworks\src\pages\transaction\create.html"*/'<ion-header>\n\n    <ion-toolbar color="primary">\n        <ion-title>Transactions</ion-title>\n        <ion-buttons end>\n            <button royal (click)="openSettings($event)" ion-button>\n                <ion-icon name="more"></ion-icon>\n            </button>\n        </ion-buttons>\n    </ion-toolbar>\n  \n</ion-header>\n\n<ion-content padding class="form" scroll="false">\n    <ion-list>\n        <form [formGroup]="transactionForm" (ngSubmit)="onSubmit(transactionForm.value)">\n\n            <ion-item>\n                <ion-label floating>Operator</ion-label>\n                <ion-input type="text" formControlName="driver_name" readonly="true"></ion-input>\n                <ion-input class="hide-input" type="hidden" formControlName="transaction_end_date" readonly="true"></ion-input>\n            </ion-item>\n\n            <ion-item>\n                <ion-label floating>Aircraft number</ion-label>\n                <ion-select formControlName="plant_id" (ionChange)="aircraftChanged()">\n                    <ion-option *ngFor="let plant of plants" value="{{plant.plant_id}}">{{plant.tail_no}}</ion-option>\n                </ion-select>\n            </ion-item>\n\n            <ion-item>\n                <ion-label fixed>Loader number</ion-label>\n                <ion-input type="text" formControlName="trailer_id" readonly="true"></ion-input>\n            </ion-item>\n\n            <ion-item>\n                <ion-label fixed>Start value</ion-label>\n                <ion-input type="text" formControlName="start_value" readonly="true"></ion-input>            \n            </ion-item>\n\n            <ion-item>\n                <ion-label fixed>End value</ion-label>\n                <ion-input type="text" formControlName="end_value" readonly="true"></ion-input>\n            </ion-item>\n\n            <ion-item>\n                <button ion-button outline item-right (click)="readMeter($event)"  block [disabled]="!transactionForm.valid" type="button">Fuelling Completed</button>\n            </ion-item>\n\n        </form>\n\n    </ion-list>\n</ion-content>\n'/*ion-inline-end:"D:\Taylor\Documents\Websites\fuelit\fuelit-aeroworks\src\pages\transaction\create.html"*/
+        selector: 'page-settings',template:/*ion-inline-start:"D:\Taylor\Documents\Websites\fuelit\fuelit-aeroworks-android\src\pages\transaction\create.html"*/'<ion-header>\n\n    <ion-toolbar color="primary">\n        <ion-title>Transactions</ion-title>\n        <ion-buttons end>\n            <button royal (click)="openSettings($event)" ion-button>\n                <ion-icon name="more"></ion-icon>\n            </button>\n        </ion-buttons>\n    </ion-toolbar>\n  \n</ion-header>\n\n<ion-content padding class="form" scroll="false">\n    <ion-list>\n        <form [formGroup]="transactionForm" (ngSubmit)="onSubmit(transactionForm.value)">\n\n            <ion-item>\n                <ion-label floating>Operator</ion-label>\n                <ion-input type="text" formControlName="driver_name" readonly="true"></ion-input>\n                <ion-input class="hide-input" type="hidden" formControlName="transaction_end_date" readonly="true"></ion-input>\n            </ion-item>\n\n            <ion-item>\n                <ion-label floating>Aircraft number</ion-label>\n                <ion-select formControlName="plant_id" (ionChange)="aircraftChanged()">\n                    <ion-option *ngFor="let plant of plants" value="{{plant.plant_id}}">{{plant.tail_no}}</ion-option>\n                </ion-select>\n            </ion-item>\n\n            <ion-item>\n                <ion-label fixed>Loader number</ion-label>\n                <ion-input type="text" formControlName="trailer_id" readonly="true"></ion-input>\n            </ion-item>\n\n            <ion-item>\n                <ion-label fixed>Start value</ion-label>\n                <ion-input type="text" formControlName="start_value" readonly="true"></ion-input>            \n            </ion-item>\n\n            <ion-item>\n                <ion-label fixed>End value</ion-label>\n                <ion-input type="text" formControlName="end_value" readonly="true"></ion-input>\n            </ion-item>\n\n            <ion-item>\n                <button ion-button outline item-right (click)="readMeter($event)"  block [disabled]="!transactionForm.valid" type="button">Fuelling Completed</button>\n            </ion-item>\n\n        </form>\n\n    </ion-list>\n</ion-content>\n'/*ion-inline-end:"D:\Taylor\Documents\Websites\fuelit\fuelit-aeroworks-android\src\pages\transaction\create.html"*/
     }), 
     __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["i" /* ToastController */], __WEBPACK_IMPORTED_MODULE_3__providers_configuration_service__["a" /* ConfigurationService */], __WEBPACK_IMPORTED_MODULE_4__providers_plant_service__["a" /* PlantService */], __WEBPACK_IMPORTED_MODULE_5__providers_transaction_service__["a" /* TransactionService */], __WEBPACK_IMPORTED_MODULE_6__providers_operator_service__["a" /* OperatorService */], __WEBPACK_IMPORTED_MODULE_7__providers_timesheet_service__["a" /* TimesheetService */], __WEBPACK_IMPORTED_MODULE_8__providers_bluetooth_service__["a" /* BluetoothService */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* Events */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["S" /* NgZone */]])
 ], CreateTransactionPage);
@@ -1222,7 +1228,7 @@ let CreateTimesheetPage = class CreateTimesheetPage {
 };
 CreateTimesheetPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* Component */])({
-        selector: 'page-settings',template:/*ion-inline-start:"D:\Taylor\Documents\Websites\fuelit\fuelit-aeroworks\src\pages\timesheet\create.html"*/'<ion-header  color="primary">\n    <ion-toolbar default>\n        <ion-title>Aircraft hours</ion-title>\n        <ion-buttons end>\n            <button royal (click)="openSettings($event)" ion-button>\n                <ion-icon name="more"></ion-icon>\n            </button>\n        </ion-buttons>\n    </ion-toolbar>\n</ion-header>\n\n<ion-content padding class="form">\n    <ion-list>\n\n        <form [formGroup]="timesheetForm" (ngSubmit)="onSubmit(timesheetForm.value)">\n            \n            <ion-input type="hidden" formControlName="start_hours"></ion-input>\n            <ion-input type="hidden" formControlName="end_hours"></ion-input>                \n\n            <ion-item>\n                <ion-label floating>Aircraft number</ion-label>\n                <ion-select formControlName="plant_id">\n                    <ion-option *ngFor="let plant of plants" value="{{plant.plant_id}}">{{plant.tail_no}}</ion-option>\n                </ion-select>\n            </ion-item>\n\n            <ion-item>\n                <ion-label>Start hours</ion-label>\n                <ion-input type="number" formControlName="start_hours"></ion-input>\n            </ion-item>\n\n            <ion-item>\n                <ion-label>End hours</ion-label>\n                <ion-input type="number" formControlName="end_hours"></ion-input>                \n            </ion-item>\n\n            <ion-item>\n                <button type="submit" block [disabled]="!timesheetForm.valid" ion-button><ion-icon name="add"></ion-icon>Add</button>\n            </ion-item>\n        </form>\n\n    </ion-list>\n</ion-content>\n'/*ion-inline-end:"D:\Taylor\Documents\Websites\fuelit\fuelit-aeroworks\src\pages\timesheet\create.html"*/
+        selector: 'page-settings',template:/*ion-inline-start:"D:\Taylor\Documents\Websites\fuelit\fuelit-aeroworks-android\src\pages\timesheet\create.html"*/'<ion-header  color="primary">\n    <ion-toolbar default>\n        <ion-title>Aircraft hours</ion-title>\n        <ion-buttons end>\n            <button royal (click)="openSettings($event)" ion-button>\n                <ion-icon name="more"></ion-icon>\n            </button>\n        </ion-buttons>\n    </ion-toolbar>\n</ion-header>\n\n<ion-content padding class="form">\n    <ion-list>\n\n        <form [formGroup]="timesheetForm" (ngSubmit)="onSubmit(timesheetForm.value)">\n            \n            <ion-input type="hidden" formControlName="start_hours"></ion-input>\n            <ion-input type="hidden" formControlName="end_hours"></ion-input>                \n\n            <ion-item>\n                <ion-label floating>Aircraft number</ion-label>\n                <ion-select formControlName="plant_id">\n                    <ion-option *ngFor="let plant of plants" value="{{plant.plant_id}}">{{plant.tail_no}}</ion-option>\n                </ion-select>\n            </ion-item>\n\n            <ion-item>\n                <ion-label>Start hours</ion-label>\n                <ion-input type="number" formControlName="start_hours"></ion-input>\n            </ion-item>\n\n            <ion-item>\n                <ion-label>End hours</ion-label>\n                <ion-input type="number" formControlName="end_hours"></ion-input>                \n            </ion-item>\n\n            <ion-item>\n                <button type="submit" block [disabled]="!timesheetForm.valid" ion-button><ion-icon name="add"></ion-icon>Add</button>\n            </ion-item>\n        </form>\n\n    </ion-list>\n</ion-content>\n'/*ion-inline-end:"D:\Taylor\Documents\Websites\fuelit\fuelit-aeroworks-android\src\pages\timesheet\create.html"*/
     }), 
     __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["b" /* Events */], __WEBPACK_IMPORTED_MODULE_1__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["i" /* ToastController */], __WEBPACK_IMPORTED_MODULE_3__providers_plant_service__["a" /* PlantService */], __WEBPACK_IMPORTED_MODULE_4__providers_operator_service__["a" /* OperatorService */], __WEBPACK_IMPORTED_MODULE_5__providers_timesheet_service__["a" /* TimesheetService */], __WEBPACK_IMPORTED_MODULE_6__providers_configuration_service__["a" /* ConfigurationService */]])
 ], CreateTimesheetPage);
@@ -1272,7 +1278,7 @@ let SettingsPage = class SettingsPage {
 };
 SettingsPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* Component */])({
-        selector: 'page-settings',template:/*ion-inline-start:"D:\Taylor\Documents\Websites\fuelit\fuelit-aeroworks\src\pages\settings\settings.html"*/'<ion-list>\n  <button ion-item (click)="refresh()">Sync data</button>\n  <button ion-item (click)="logout()">Logout</button>\n  <!--<button ion-item (click)="error()">Error</button>-->\n</ion-list>\n'/*ion-inline-end:"D:\Taylor\Documents\Websites\fuelit\fuelit-aeroworks\src\pages\settings\settings.html"*/,
+        selector: 'page-settings',template:/*ion-inline-start:"D:\Taylor\Documents\Websites\fuelit\fuelit-aeroworks-android\src\pages\settings\settings.html"*/'<ion-list>\n  <button ion-item (click)="refresh()">Sync data</button>\n  <button ion-item (click)="logout()">Logout</button>\n  <!--<button ion-item (click)="error()">Error</button>-->\n</ion-list>\n'/*ion-inline-end:"D:\Taylor\Documents\Websites\fuelit\fuelit-aeroworks-android\src\pages\settings\settings.html"*/,
     }), 
     __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Events */]])
 ], SettingsPage);
